@@ -1,0 +1,201 @@
+﻿@model Interext.Models.Event
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section CssStyles{
+    @Styles.Render("~/Content/eventPageCss")
+}
+
+
+
+@*<div id="single-page">*@
+<div>
+    <div id="content" class="right-sidebar">
+        <div class="event-page-content">
+            <article>
+                @*<div class="royalSlider postGallerySlider rsMinW rsAutoHeight rsHor rsWithBullets">
+                    <div class="rsOverflow grab-cursor" style="width: 792px; height: 397px; -webkit-transition: height 800ms ease-in-out; transition: height 800ms ease-in-out;"><div class="rsContainer" style="-webkit-transition: 800ms cubic-bezier(0.445, 0.05, 0.55, 0.95); transition: 800ms cubic-bezier(0.445, 0.05, 0.55, 0.95); -webkit-transform: translate3d(-792px, 0px, 0px);"><div style="left: 0px;" class="rsSlide "><img class="rsImg rsMainSlideImage" src="http://contrast.freevision.me/wp-content/uploads/2013/11/contrast_ss1.jpg" alt="image desc" style="width: 794px; height: 397px; margin-left: -1px; margin-top: 0px;"></div><div style="left: 792px;" class="rsSlide "><img class="rsImg rsMainSlideImage" src="http://contrast.freevision.me/wp-content/uploads/2013/11/contrast_ss2.jpg" alt="image desc" style="width: 794px; height: 397px; margin-left: -1px; margin-top: 0px;"></div><div style="left: 1584px;" class="rsSlide "><img class="rsImg rsMainSlideImage" src="http://contrast.freevision.me/wp-content/uploads/2013/11/contrast_ss31.jpg" alt="image desc" style="width: 794px; height: 397px; margin-left: -1px; margin-top: 0px;"></div></div><div class="rsArrow rsArrowLeft" style="display: block;"><div class="rsArrowIcn"></div></div><div class="rsArrow rsArrowRight" style="display: block;"><div class="rsArrowIcn"></div></div></div><div class="rsNav rsBullets"><div class="rsNavItem rsBullet"><span></span></div><div class="rsNavItem rsBullet rsNavSelected"><span></span></div><div class="rsNavItem rsBullet"><span></span></div></div><div style="clear:both; float: none;"></div></div>*@
+                <div class="event-intro-wrapper">
+                    <div class="event-intro">
+                        <h1 class="event-title">
+
+                            Evening walks with dogs
+                        </h1>
+                        <div class="event-date">15.5</div>
+                        <div class="clear"></div>
+                        <div class="event-details">
+                            <span class="fa fa-map-marker"></span>Tel Aviv, Israel<br />
+                            <a href="~/Account/ShowProfile"><div class="createdby">Created by</div> <img src="/Content/images/example-images/profile-pic.jpg" /><div class="creator-name">Sash Pol</div></a>
+                            <div class="clear"></div>
+                        </div>
+                        <table class="event-restrictions">
+                            <tr><td colspan="2">Event for:</td></tr>
+                            <tr><td>Ages</td><td> 40 - 50</td></tr>
+                            <tr><td>Gender</td><td>Female</td></tr>
+                            <tr><td>Interests</td><td>Dogs, Arts</td></tr>
+                        </table>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>Didn’t need no welfare states. Everybody pulled his weight. Gee our old Lasalle ran great. Those were the days. We’re gonna do it. On your mark get set and go now. Got a dream and we just know now we’re gonna make our dream come true. Come and dance on our floor. Take a step that is new. We’ve a loveable space that needs your face threes company too.</p>
+                    <p><span id="more-372"></span></p>
+                    <p>All of them had hair of gold like their mother the youngest one in curls!” It’s time to play the music. It’s time to light the lights. It’s time to meet the Muppets on the Muppet Show tonight. Straightnin’ the curves. Flatnin’ the hills Someday the mountain might get ‘em but the law never will. Today still wanted by the government they survive as soldiers of fortune. So this is the tale of our castaways they’re here for a long long time. They’ll have to make the best of things its an uphill climb.</p>
+                </div><!--.post-content-->
+            </article>
+            <div id="ozy-share-div" class="ozy-share-div-blog">
+                <span>Share This:&nbsp;</span>
+                <a href="http://www.facebook.com/share.php?u=http%3A%2F%2Fcontrast.freevision.me%2Fblog%2F2013%2F11%2F27%2Fcontrast-is-your-next-level-theme%2F" title="" class="tooltip pop share-icon share-icon-facebook" style="display: inline-block;"><span class="symbol"></span></a>
+                <a href="https://twitter.com/share?url=http%3A%2F%2Fcontrast.freevision.me%2Fblog%2F2013%2F11%2F27%2Fcontrast-is-your-next-level-theme%2F&amp;text=Contrast%20is%20Your%20Next%20Level%20Theme" title="" class="tooltip pop share-icon share-icon-twitter" style="display: inline-block;"><span class="symbol"></span></a>
+                <a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fcontrast.freevision.me%2Fblog%2F2013%2F11%2F27%2Fcontrast-is-your-next-level-theme%2F&amp;media=&amp;description=  Contrast is Your Next Level ThemeWordPress Photography Theme" title="" class="tooltip pop share-icon share-icon-pinterest" style="display: inline-block;"><span class="symbol"></span></a>
+                <a href="http://www.tumblr.com/share?v=3&amp;u=http%3A%2F%2Fcontrast.freevision.me%2Fblog%2F2013%2F11%2F27%2Fcontrast-is-your-next-level-theme%2F" title="" class="tooltip pop share-icon share-icon-tumblr" style="display: inline-block;"><span class="symbol"></span></a>
+                <a href="https://plusone.google.com/_/+1/confirm?hl=en&amp;url=http%3A%2F%2Fcontrast.freevision.me%2Fblog%2F2013%2F11%2F27%2Fcontrast-is-your-next-level-theme%2F" title="" class="tooltip pop share-icon share-icon-googleplus" style="display: inline-block;"><span class="symbol"></span></a>
+                <a href="mailto:?subject=Contrast%20is%20Your%20Next%20Level%20Theme" title="" class="tooltip pop share-icon share-icon-email" style="display: inline-block;"><span class="symbol"></span></a>
+            </div><!--#share-buttons-->
+        </div>
+
+
+
+        <div class="clear"></div>
+
+        <div id="comments">
+            <!-- Prevents loading the file directly -->
+            <!-- Password Required -->
+            <!-- variable for alternating comment styles -->
+            <p>No comments yet.</p>
+
+            <div id="comments-form">
+                <div id="respond" class="comment-respond">
+                    <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://contrast.freevision.me/blog/2013/11/27/contrast-is-your-next-level-theme/#respond&quot;" style="display:none;">Cancel reply</a></small>
+                    <div id="respond" class="comment-respond">
+                        <h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/blog/2013/11/27/contrast-is-your-next-level-theme/#respond" style="display:none;">Cancel reply</a></small></h3>
+                        <form action="http://contrast.freevision.me/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+                            <p>
+                                <label for="comment"><small>Comment</small></label>
+                                <textarea name="comment" id="comment" cols="100%" placeholder="Comment" rows="10" tabindex="4"></textarea>
+                            </p>
+
+
+                        </form>
+                    </div><!-- #respond -->
+                </div>
+            </div><!--#commentsForm-->
+        </div><!--#comments-->
+    </div><!--#content-->
+
+    <div id="sidebar" class="right-sidebar">
+        <ul>
+            <li>
+                <form>
+                    <input value="+Join" type="submit" class="join-event" />
+                </form>
+            </li>
+            @*<li class="widget">
+                    <h3>LOOKING FOR SOMETHING?</h3><form action="http://contrast.freevision.me/" method="get" class="wp-search-form">
+                        <i class="fa fa-search"></i>
+                        <input x-webkit-speech="" speech="" type="text" name="s" id="search" placeholder="Type and hit Enter">
+                    </form>
+                </li>*@
+            <li class="widget">
+                <h3>SIMILAR EVENTS</h3><div class="ozy-latest-posts">
+                    <a href="/Event/Details?id=1" title="Arizona Muse" style="background-image:url('/Content/images/example-images/event1.jpg')"></a>
+                    <a href="/Event/Details?id=1" title="Arizona Muse" style="background-image:url('/Content/images/example-images/event2.jpg')"></a>
+                    <a href="/Event/Details?id=1" title="Arizona Muse" style="background-image:url('/Content/images/example-images/event3.jpg')"></a>
+                    <a href="/Event/Details?id=1" title="Arizona Muse" style="background-image:url('/Content/images/example-images/event4.png')"></a>
+                    <a href="/Event/Details?id=1" title="Arizona Muse" style="background-image:url('/Content/images/example-images/event5.jpg')"></a>
+                    <a href="/Event/Details?id=1" title="Arizona Muse" style="background-image:url('/Content/images/example-images/event6.jpg')"></a>
+                    <a href="/Event/Details?id=1" title="Arizona Muse" style="background-image:url('/Content/images/example-images/event7.jpg')"></a>
+                    <a href="/Event/Details?id=1" title="Arizona Muse" style="background-image:url('/Content/images/example-images/event8.jpg')"></a>
+                    <a href="/Event/Details?id=1" title="Arizona Muse" style="background-image:url('/Content/images/example-images/event9.jpg')"></a>
+                </div>
+            </li>
+            @*<li class="widget">
+                    <h3>CATEGORIES</h3>		<ul>
+                        <li class="cat-item cat-item-36">
+                            <a href="http://contrast.freevision.me/blog/category/metro/" title="View all posts filed under Metro">Metro</a>
+                        </li>
+                        <li class="cat-item cat-item-11">
+                            <a href="http://contrast.freevision.me/blog/category/motion/" title="View all posts filed under Motion">Motion</a>
+                        </li>
+                        <li class="cat-item cat-item-16">
+                            <a href="http://contrast.freevision.me/blog/category/music/" title="View all posts filed under Music">Music</a>
+                        </li>
+                        <li class="cat-item cat-item-14">
+                            <a href="http://contrast.freevision.me/blog/category/photography/" title="View all posts filed under Photography">Photography</a>
+                        </li>
+                        <li class="cat-item cat-item-15">
+                            <a href="http://contrast.freevision.me/blog/category/press/" title="View all posts filed under Press">Press</a>
+                        </li>
+                        <li class="cat-item cat-item-1">
+                            <a href="http://contrast.freevision.me/blog/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="widget">
+                    <h3>RECENT PRODUCTS</h3><div class="ozy-latest-posts">
+                        <a href="http://contrast.freevision.me/product/a-magical-mystery/" title="A MAGICAL MYSTERY" style="background-image:url(http://contrast.freevision.me/wp-content/uploads/2014/01/poster7-150x150.jpg)"></a><a href="http://contrast.freevision.me/product/black-white/" title="BLACK &amp; WHITE" style="background-image:url(http://contrast.freevision.me/wp-content/uploads/2014/01/poster12-150x150.jpg)"></a><a href="http://contrast.freevision.me/product/fly-conquer/" title="FLY &amp; CONQUER" style="background-image:url(http://contrast.freevision.me/wp-content/uploads/2014/01/poster4-150x150.jpg)"></a><a href="http://contrast.freevision.me/product/its-my-life/" title="IT’S MY LIFE" style="background-image:url(http://contrast.freevision.me/wp-content/uploads/2014/01/poster5-150x150.jpg)"></a><a href="http://contrast.freevision.me/product/leather-villains/" title="LEATHER VILLAINS" style="background-image:url(http://contrast.freevision.me/wp-content/uploads/2014/01/poster3-150x150.jpg)"></a><a href="http://contrast.freevision.me/product/limited-edition-artwork/" title="LIMITED EDITION ARTWORK" style="background-image:url(http://contrast.freevision.me/wp-content/uploads/2014/01/poster2-150x150.jpg)"></a><a href="http://contrast.freevision.me/product/nothing-to-lose/" title="NOTHING TO LOSE" style="background-image:url(http://contrast.freevision.me/wp-content/uploads/2014/01/poster9-150x150.jpg)"></a><a href="http://contrast.freevision.me/product/sun-is-shining/" title="SUN IS SHINING" style="background-image:url(http://contrast.freevision.me/wp-content/uploads/2014/01/poster10-150x150.jpg)"></a><a href="http://contrast.freevision.me/product/surf-club-2012/" title="SURF CLUB 2012" style="background-image:url(http://contrast.freevision.me/wp-content/uploads/2014/01/poster11-150x150.jpg)"></a>
+                    </div>
+                </li>*@
+
+        </ul>
+    </div>
+    <!--sidebar-->
+    <div class="clear"></div>
+
+
+</div>
+
+@*<h2>Details</h2>
+
+    <div>
+        <h4>Event</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ImageUrl)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateTimeOfTheEvent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateTimeOfTheEvent)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateTimeCreated)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateTimeCreated)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
