@@ -10,6 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Interext.Models;
 using System.Web.Security;
+using Microsoft.Owin.Security.Facebook;
+using Microsoft.AspNet.Identity.Owin;
+using System.IO;
 
 namespace Interext.Controllers
 {
@@ -99,7 +102,7 @@ namespace Interext.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase ImageUrl)
         {
             if (ModelState.IsValid)
             {
@@ -108,10 +111,27 @@ namespace Interext.Controllers
                 user.LastName = model.LastName;
                 user.Email = model.Email;
                 user.Gender = model.Gender;
+                            
+                user.ImageUrl = model.ImageUrl;
+
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
+
+                    if (ImageUrl != null)
+                    {
+                        if (ImageUrl.ContentLength > 0)
+                        {
+                            var fileName = Path.GetFileName(ImageUrl.FileName);
+                            // need to create folder for each user, the name of the folder is the id of the user
+                            var path = Path.Combine(Server.MapPath("~/App_Data/uploads/user_profiles"), fileName);
+                            ImageUrl.SaveAs(path);
+
+                        }
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -225,24 +245,14 @@ namespace Interext.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
-            
-            var result = await AuthenticationManager.AuthenticateAsync(DefaultAuthenticationTypes.ExternalCookie);
-            if (result == null || result.Identity == null)
+            var loginInfo = await AuthenticationManager_GetExternalLoginInfoAsync_Workaround();
+            if (loginInfo == null)
             {
                 return RedirectToAction("Login");
             }
-
-            var idClaim = result.Identity.FindFirst(ClaimTypes.NameIdentifier);
-            if (idClaim == null)
-            {
-                return RedirectToAction("Login");
-            }
-
-            var login = new UserLoginInfo(idClaim.Issuer, idClaim.Value);
-            var name = result.Identity.Name == null ? "" : result.Identity.Name.Replace(" ", "");
 
             // Sign in the user with this external login provider if the user already has a login
-            var user = await UserManager.FindAsync(login);
+            var user = await UserManager.FindAsync(loginInfo.Login);
             if (user != null)
             {
                 await SignInAsync(user, isPersistent: false);
@@ -252,9 +262,58 @@ namespace Interext.Controllers
             {
                 // If the user does not have an account, then prompt the user to create an account
                 ViewBag.ReturnUrl = returnUrl;
-                ViewBag.LoginProvider = login.LoginProvider;
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = name });
+                ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
             }
+            //var result = await AuthenticationManager.AuthenticateAsync(DefaultAuthenticationTypes.ExternalCookie);
+            //if (result == null || result.Identity == null)
+            //{
+            //    return RedirectToAction("Login");
+            //}
+
+            //var idClaim = result.Identity.FindFirst(ClaimTypes.NameIdentifier);
+            //if (idClaim == null)
+            //{
+            //    return RedirectToAction("Login");
+            //}
+
+            //var login = new UserLoginInfo(idClaim.Issuer, idClaim.Value);
+            //var name = result.Identity.Name == null ? "" : result.Identity.Name.Replace(" ", "");
+
+            //// Sign in the user with this external login provider if the user already has a login
+            //var user = await UserManager.FindAsync(login);
+            //if (user != null)
+            //{
+            //    await SignInAsync(user, isPersistent: false);
+            //    return RedirectToLocal(returnUrl);
+            //}
+            //else
+            //{
+            //    // If the user does not have an account, then prompt the user to create an account
+            //    ViewBag.ReturnUrl = returnUrl;
+            //    ViewBag.LoginProvider = login.LoginProvider;
+            //    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = name });
+            //}
+        }
+
+        private async Task<ExternalLoginInfo> AuthenticationManager_GetExternalLoginInfoAsync_Workaround()
+        {
+            ExternalLoginInfo loginInfo = null;
+            var result = await AuthenticationManager.AuthenticateAsync(DefaultAuthenticationTypes.ExternalCookie);
+
+            if (result != null && result.Identity != null)
+            {
+                var idClaim = result.Identity.FindFirst(ClaimTypes.NameIdentifier);
+                if (idClaim != null)
+                {
+                    loginInfo = new ExternalLoginInfo()
+                    {
+                        DefaultUserName = result.Identity.Name == null ? "" : result.Identity.Name.Replace(" ", ""),
+                        Login = new UserLoginInfo(idClaim.Issuer, idClaim.Value)
+                    };
+                }
+            }
+            return loginInfo;
         }
 
         //
@@ -291,26 +350,37 @@ namespace Interext.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    return RedirectToAction("Manage");
-            //}
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Manage");
+            }
 
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                var info = await AuthenticationManager_GetExternalLoginInfoAsync_Workaround();
+                ApplicationUser user;
                 if (info == null)
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser() { 
-                    UserName = model.UserName,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    Gender = model.Gender
-                };
+                string loginProviderLowerCase = info.Login.LoginProvider.ToLower();
+                if (loginProviderLowerCase == "facebook")
+                {
+                    user = createUserFromFacebookInfo(model);
+                }
+                else
+                {
+                    user = new ApplicationUser()
+                    {
+                        UserName = model.UserName,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        Gender = model.Gender
+                    };
+                }
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -326,6 +396,25 @@ namespace Interext.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
+        }
+
+        private ApplicationUser createUserFromFacebookInfo(ExternalLoginConfirmationViewModel i_Model)
+        {
+            ApplicationUser userToReturn;
+            var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+            var email = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+            var firstName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:first_name").Value;
+            var lastName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:last_name").Value;
+            var gender = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:gender").Value;
+            userToReturn = new ApplicationUser()
+            {
+                UserName = i_Model.UserName,
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                Gender = i_Model.Gender
+            };
+            return userToReturn;
         }
 
         //

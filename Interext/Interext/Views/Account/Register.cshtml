@@ -22,20 +22,24 @@
         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm password" })
         @Html.ValidationMessageFor(m => m.ConfirmPassword)
         @*<script>
-                    $(function () {
-                        $("#BirthDate").datepicker();
-                    });
-                </script>
-    <input type="text" id="BirthDate" name="BirthDate" class="form-control" placeholder="Birth date" />
-                @Html.ValidationMessageFor(m => m.BirthDate)*@
+                            $(function () {
+                                $("#BirthDate").datepicker();
+                            });
+                        </script>
+            <input type="text" id="BirthDate" name="BirthDate" class="form-control" placeholder="Birth date" />
+                        @Html.ValidationMessageFor(m => m.BirthDate)*@
         @*@Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", @placeholder = "Birth date" })
-        @Html.ValidationMessageFor(m => m.BirthDate)*@
+            @Html.ValidationMessageFor(m => m.BirthDate)*@
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
         @Html.ValidationMessageFor(m => m.Email)
-        @Html.RadioButtonFor(m => m.Gender, "M", new { @checked ="checked"})
+        @Html.RadioButtonFor(m => m.Gender, "M", new { @checked = "checked" })
         <span>Male</span>
         @Html.RadioButtonFor(m => m.Gender, "F")
         <span>Female</span>
+        @Html.LabelFor(model => model.ImageUrl, new { @class = "form-control" })
+        <input type="file" name="ImageUrl" id="ImageUrl" />
+
+
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 

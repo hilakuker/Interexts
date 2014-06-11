@@ -11,11 +11,11 @@
 {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
-        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control first-name", @placeholder = "First name" })
-        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control last-name", @placeholder = "Last name" })
+        @*Html.TextBoxFor(m => m.FirstName, new { @class = "form-control first-name", @placeholder = "First name" })*@
+        @*@Html.TextBoxFor(m => m.LastName, new { @class = "form-control last-name", @placeholder = "Last name" })*@
         <div class="clear"></div>
-        @Html.ValidationMessageFor(m => m.FirstName)
-        @Html.ValidationMessageFor(m => m.LastName)
+        @*@Html.ValidationMessageFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.LastName)*@
         @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
         @Html.ValidationMessageFor(m => m.UserName)
         @*<script>
@@ -27,12 +27,12 @@
                         @Html.ValidationMessageFor(m => m.BirthDate)*@
         @*@Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", @placeholder = "Birth date" })
             @Html.ValidationMessageFor(m => m.BirthDate)*@
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
-        @Html.ValidationMessageFor(m => m.Email)
-        @Html.RadioButtonFor(m => m.Gender, "M", new { @checked = "checked" })
+        @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })*@
+        @*@Html.ValidationMessageFor(m => m.Email)*@
+        @*@Html.RadioButtonFor(m => m.Gender, "M", new { @checked = "checked" })
         <span>Male</span>
         @Html.RadioButtonFor(m => m.Gender, "F")
-        <span>Female</span>
+        <span>Female</span>*@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 

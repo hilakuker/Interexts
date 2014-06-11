@@ -11,7 +11,7 @@
 
 <section class="profile">
     <div class="profile-content">
-        <img src="/Content/images/example-images/profile-pic.jpg" />
+        <img src="@Html.DisplayFor(model => model.ImageUrl)" />
         <div class="profile-info">
             <h1 class="name">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h1>
             <table class="basic-info">

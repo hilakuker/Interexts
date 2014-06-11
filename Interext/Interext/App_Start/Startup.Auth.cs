@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Facebook;
 using Owin;
 
 namespace Interext
@@ -27,10 +28,31 @@ namespace Interext
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+            var x = new FacebookAuthenticationOptions();
+            x.Scope.Add("email");
+            x.AppId = "650693548342259";
+            x.AppSecret = "f63ea2f17a0874493962be19e5344834";
+            x.Provider = new FacebookAuthenticationProvider()
+            {
+                OnAuthenticated = async context =>
+                {
+                    context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+                    foreach (var claim in context.User)
+                    {
+                        var claimType = string.Format("urn:facebook:{0}", claim.Key);
+                        string claimValue = claim.Value.ToString();
+                        if (!context.Identity.HasClaim(claimType, claimValue))
+                            context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "Facebook"));
+                    }
 
-            app.UseFacebookAuthentication(
-               appId: "1411205469159168",
-               appSecret: "e0fd1508bdf84f361bdb9dbc63553444");
+                }
+            };
+
+            x.SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie;
+            app.UseFacebookAuthentication(x);
+            //app.UseFacebookAuthentication(
+            //   appId: "650693548342259",
+            //   appSecret: "f63ea2f17a0874493962be19e5344834");
 
             app.UseGoogleAuthentication();
         }

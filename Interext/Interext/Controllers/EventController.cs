@@ -65,8 +65,9 @@ namespace Interext.Controllers
                     if (ImageUrl.ContentLength > 0)
                     {
                         var fileName = Path.GetFileName(ImageUrl.FileName);
-                        var uri = "~/App_Data/uploads/" + @event.Id;
-                        var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                       // var uri = "~/App_Data/uploads/events" + @event.Id;
+                        // need to create folder for each event, the name of the folder is the id of the event
+                        var path = Path.Combine(Server.MapPath("~/App_Data/uploads/events"), fileName);
                         ImageUrl.SaveAs(path);
                         @event.ImageUrl = fileName;
                     }
