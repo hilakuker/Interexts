@@ -16,8 +16,8 @@
         <div class="clear"></div>
         @*@Html.ValidationMessageFor(m => m.FirstName)
         @Html.ValidationMessageFor(m => m.LastName)*@
-        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
-        @Html.ValidationMessageFor(m => m.UserName)
+        @*@Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
+        @Html.ValidationMessageFor(m => m.UserName)*@
         @*<script>
                             $(function () {
                                 $("#BirthDate").datepicker();
@@ -27,8 +27,8 @@
                         @Html.ValidationMessageFor(m => m.BirthDate)*@
         @*@Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", @placeholder = "Birth date" })
             @Html.ValidationMessageFor(m => m.BirthDate)*@
-        @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })*@
-        @*@Html.ValidationMessageFor(m => m.Email)*@
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
+        @Html.ValidationMessageFor(m => m.Email)
         @*@Html.RadioButtonFor(m => m.Gender, "M", new { @checked = "checked" })
         <span>Male</span>
         @Html.RadioButtonFor(m => m.Gender, "F")

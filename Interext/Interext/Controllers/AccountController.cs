@@ -13,6 +13,7 @@ using System.Web.Security;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.AspNet.Identity.Owin;
 using System.IO;
+using Interext.OtherCalsses;
 
 namespace Interext.Controllers
 {
@@ -27,6 +28,8 @@ namespace Interext.Controllers
         public AccountController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+            var userValidator = UserManager.UserValidator as UserValidator<ApplicationUser>;
+            userValidator.AllowOnlyAlphanumericUserNames = false;
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -37,11 +40,15 @@ namespace Interext.Controllers
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             ProfileViewModel profile = new ProfileViewModel();
-            profile.UserName = user.UserName;
+            //profile.UserName = user.UserName;
             profile.FirstName = user.FirstName;
             profile.LastName = user.LastName;
             profile.Email = user.Email;
-            profile.Gender = user.Gender;
+            if (user.Gender == "F")
+                profile.Gender = "Female";
+            else
+                profile.Gender = "Male";
+            //add age
             profile.Interests = null;
             profile.Events = null;
             return View(profile);
@@ -65,7 +72,7 @@ namespace Interext.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.UserName, model.Password);
+                var user = await UserManager.FindAsync(GenerateUserName(model.Email), model.Password);
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
@@ -73,7 +80,7 @@ namespace Interext.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Invalid email or password.");
                 }
             }
 
@@ -104,34 +111,30 @@ namespace Interext.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase ImageUrl)
         {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.Email = model.Email;
-                user.Gender = model.Gender;
+                var user = new ApplicationUser() {
+                    UserName = GenerateUserName(model.Email),
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Gender = model.Gender,
+                    ImageUrl = model.Gender
+                };
+                //user.FirstName = model.FirstName;
+                //user.LastName = model.LastName;
+                //user.Gender = model.Gender;
                             
-                user.ImageUrl = model.ImageUrl;
+                //user.ImageUrl = model.ImageUrl;
 
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
-
-                    if (ImageUrl != null)
-                    {
-                        if (ImageUrl.ContentLength > 0)
-                        {
-                            var fileName = Path.GetFileName(ImageUrl.FileName);
-                            // need to create folder for each user, the name of the folder is the id of the user
-                            var path = Path.Combine(Server.MapPath("~/App_Data/uploads/user_profiles"), fileName);
-                            ImageUrl.SaveAs(path);
-
-                        }
-                    }
-
+                    string pathToSavePicture = Path.Combine(Server.MapPath("~/App_Data/uploads/user_profiles"), user.Id);
+                    ImageSaver.SaveImage(ImageUrl, pathToSavePicture);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -144,6 +147,10 @@ namespace Interext.Controllers
             return View(model);
         }
 
+        public string GenerateUserName(string email)
+        {
+            return email.Replace("@", "").Replace(".", "").Replace("-", "");
+        }
         //
         // POST: /Account/Disassociate
         [HttpPost]
@@ -263,7 +270,10 @@ namespace Interext.Controllers
                 // If the user does not have an account, then prompt the user to create an account
                 ViewBag.ReturnUrl = returnUrl;
                 ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
+                Task<ClaimsIdentity> externalIdentity = getExternalIdentity();
+                var email = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email});
             }
             //var result = await AuthenticationManager.AuthenticateAsync(DefaultAuthenticationTypes.ExternalCookie);
             //if (result == null || result.Identity == null)
@@ -374,7 +384,7 @@ namespace Interext.Controllers
                 {
                     user = new ApplicationUser()
                     {
-                        UserName = model.UserName,
+                        UserName = GenerateUserName(model.Email),
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         Email = model.Email,
@@ -401,20 +411,27 @@ namespace Interext.Controllers
         private ApplicationUser createUserFromFacebookInfo(ExternalLoginConfirmationViewModel i_Model)
         {
             ApplicationUser userToReturn;
-            var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+            var externalIdentity = getExternalIdentity();
             var email = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+
             var firstName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:first_name").Value;
             var lastName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:last_name").Value;
             var gender = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:gender").Value;
+            //var emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             userToReturn = new ApplicationUser()
             {
-                UserName = i_Model.UserName,
+                UserName = GenerateUserName(i_Model.Email),
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
                 Gender = i_Model.Gender
             };
             return userToReturn;
+        }
+
+        private Task<ClaimsIdentity> getExternalIdentity()
+        {
+            return HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
         }
 
         //
@@ -474,9 +491,16 @@ namespace Interext.Controllers
 
         private void AddErrors(IdentityResult result)
         {
-            foreach (var error in result.Errors)
+            foreach (string error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                if (error.Contains("Name") && error.Contains("is already taken."))
+                {
+                    ModelState.AddModelError("", "Email is allready taken");
+                }
+                else
+                {
+                    ModelState.AddModelError("", error);
+                }
             }
         }
 

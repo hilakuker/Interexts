@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Interext.Models;
 using System.IO;
+using Interext.OtherCalsses;
 
 namespace Interext.Controllers
 {
@@ -60,18 +61,20 @@ namespace Interext.Controllers
             if (ModelState.IsValid)
             {
                 //Event dbEvent = new Event();
-                if (ImageUrl != null)
-                {
-                    if (ImageUrl.ContentLength > 0)
-                    {
-                        var fileName = Path.GetFileName(ImageUrl.FileName);
-                       // var uri = "~/App_Data/uploads/events" + @event.Id;
-                        // need to create folder for each event, the name of the folder is the id of the event
-                        var path = Path.Combine(Server.MapPath("~/App_Data/uploads/events"), fileName);
-                        ImageUrl.SaveAs(path);
-                        @event.ImageUrl = fileName;
-                    }
-                }
+                string path = Path.Combine(Server.MapPath("~/App_Data/uploads/events"), @event.Id.ToString());
+                ImageSaver.SaveImage(ImageUrl, path);
+                //if (ImageUrl != null)
+                //{
+                //    if (ImageUrl.ContentLength > 0)
+                //    {
+                //        var fileName = Path.GetFileName(ImageUrl.FileName);
+                //       // var uri = "~/App_Data/uploads/events" + @event.Id;
+                //        // need to create folder for each event, the name of the folder is the id of the event
+                //        var path = Path.Combine(Server.MapPath("~/App_Data/uploads/events"), fileName);
+                //        ImageUrl.SaveAs(path);
+                //        @event.ImageUrl = fileName;
+                //    }
+                //}
                 @event.DateTimeCreated = DateTime.Now;
                 //dbEvent.DateTimeOfTheEvent = @event.DateTimeOfTheEvent;
                 //dbEvent.Description = @event.Description;

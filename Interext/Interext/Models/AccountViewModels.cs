@@ -6,7 +6,6 @@ namespace Interext.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
         [Display(Name = "Username")]
         public string UserName { get; set; }
 
@@ -49,8 +48,8 @@ namespace Interext.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Username")]
-        public string UserName { get; set; }
+        [Display(Name = "Your Email")]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -63,7 +62,7 @@ namespace Interext.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        //[Required]
         [Display(Name = "Username")]
         public string UserName { get; set; }
 
@@ -105,7 +104,7 @@ namespace Interext.Models
 
     public class ProfileViewModel
     {
-        [Required]
+        //[Required]
         [Display(Name = "Username")]
         public string UserName { get; set; }
 

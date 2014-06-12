@@ -10,25 +10,27 @@
         See the interests of the people going to these events and decide if it's right for you.
         <br /><br />
     </div>
-    @*@Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })*@
-    <div class="social-links">
-        @Html.Partial("_ExternalLoginsListPartial", new Interext.Models.ExternalLoginViewModel() { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
-        </div>
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-internal-signin login", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
-            @Html.ValidationMessageFor(m => m.UserName)
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
-            @Html.ValidationMessageFor(m => m.Password)
-            <div class="checkbox">
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe)
-            </div>
-            @Html.ActionLink("Not registered? Sign up now.", "ChooseRegisterProvider", null, new { @class = "not-registered" })
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        }
+   @*@Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })*@
+<div class="social-links">
+    @Html.Partial("_ExternalLoginsListPartial", new Interext.Models.ExternalLoginViewModel() { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
+</div>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-internal-signin login", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @*@Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
+        @Html.ValidationMessageFor(m => m.UserName)*@
+    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
+    @Html.ValidationMessageFor(m => m.Email)
+    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+    @Html.ValidationMessageFor(m => m.Password)
+    <div class="checkbox">
+        @Html.CheckBoxFor(m => m.RememberMe)
+        @Html.LabelFor(m => m.RememberMe)
+    </div>
+    @Html.ActionLink("Not registered? Sign up now.", "ChooseRegisterProvider", null, new { @class = "not-registered" })
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+}
 </section>
 
 @*<h2>@ViewBag.Title.</h2>
