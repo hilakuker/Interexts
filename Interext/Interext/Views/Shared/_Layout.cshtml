@@ -33,7 +33,10 @@
                     </div><!--#title-->
 
                     <div id="slide-menu"><a title="Side Menu" id="sidr-menu" href="#sidr"><span class="fa fa-reorder">&nbsp;</span></a></div><!--#side-menu-->
-                    @Html.Partial("_LoginPartial")
+                    @*@Html.Partial("_LoginPartial", new Interext.Models.BaseModel())*@
+                    @*@Html.Partial("_LoginPartial")*@
+                    @*@{Html.RenderAction("Index", "PartialView");}*@
+                @Html.Action("Index", "PartialView")
                     <div class="clear"></div>
                 </div><!--.container-->
             </header>

@@ -61,8 +61,7 @@ namespace Interext.Controllers
             if (ModelState.IsValid)
             {
                 //Event dbEvent = new Event();
-                string path = Path.Combine(Server.MapPath("~/App_Data/uploads/events"), @event.Id.ToString());
-                ImageSaver.SaveImage(ImageUrl, path);
+                ImageSaver.SaveImage(ImageUrl, Server.MapPath("~/App_Data/uploads/events"), ImageUrl.FileName);
                 //if (ImageUrl != null)
                 //{
                 //    if (ImageUrl.ContentLength > 0)

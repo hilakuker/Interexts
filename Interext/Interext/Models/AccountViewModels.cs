@@ -102,7 +102,7 @@ namespace Interext.Models
         public string Gender { get; set; }
     }
 
-    public class ProfileViewModel
+    public class ProfileViewModel : ImageModel
     {
         //[Required]
         [Display(Name = "Username")]
@@ -123,9 +123,8 @@ namespace Interext.Models
 
   
         [Display(Name = "Image Url")]
-        public string ImageUrl { get; set; }
-        //[Display(Name = "Date of birth")]
-        //public DateTime BirthDate { get; set; }
+        public new string ImageUrl { get; set; }
+
 
         [Required]
         [Display(Name = "Gender")]

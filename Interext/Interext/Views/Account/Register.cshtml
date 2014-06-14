@@ -6,7 +6,7 @@
     <h1 class="form-signin-heading">Register to INTEREXTS</h1>
     @*@Html.Partial("_ExternalLoginsListPartial", new Interext.Models.ExternalLoginViewModel() { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })*@
 
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-internal-signin register", role = "form" }))
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -37,7 +37,8 @@
         <span>Male</span>
         @Html.RadioButtonFor(m => m.Gender, "F")
         <span>Female</span>
-        @Html.LabelFor(model => model.ImageUrl, new { @class = "form-control" })
+        @*@Html.LabelFor(model => model.ImageUrl, new { @class = "form-control" })*@
+        <label for="ImageUrl" class="form-control">image:</label>
         <input type="file" name="ImageUrl" id="ImageUrl" />
 
 

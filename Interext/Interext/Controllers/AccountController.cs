@@ -51,6 +51,7 @@ namespace Interext.Controllers
             //add age
             profile.Interests = null;
             profile.Events = null;
+            profile.ImageUrl = user.ImageUrl;
             return View(profile);
         }
 
@@ -72,7 +73,7 @@ namespace Interext.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(GenerateUserName(model.Email), model.Password);
+                ApplicationUser user = await UserManager.FindAsync(GenerateUserName(model.Email), model.Password);
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
@@ -120,21 +121,12 @@ namespace Interext.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Gender = model.Gender,
-                    ImageUrl = model.Gender
                 };
-                //user.FirstName = model.FirstName;
-                //user.LastName = model.LastName;
-                //user.Gender = model.Gender;
-                            
-                //user.ImageUrl = model.ImageUrl;
-
-
+                uploadAndSetImage(user, ImageUrl);
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
-                    string pathToSavePicture = Path.Combine(Server.MapPath("~/App_Data/uploads/user_profiles"), user.Id);
-                    ImageSaver.SaveImage(ImageUrl, pathToSavePicture);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -142,9 +134,22 @@ namespace Interext.Controllers
                     AddErrors(result);
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private void uploadAndSetImage(ApplicationUser user, HttpPostedFileBase ImageUrl)
+        {
+            if (ImageUrl != null)
+            {
+
+                string pathForToSave = Path.Combine(Server.MapPath("~/Content/images"), user.Id);
+                string fileName = Path.GetFileName(ImageUrl.FileName);
+                string pathForPicture = string.Format(@"/Content/images/{0}/{1}", user.Id, fileName);
+                user.ImageUrl = pathForPicture;
+                ImageSaver.SaveImage(ImageUrl, pathForToSave, fileName);
+                Server.MapPath(pathForPicture);
+            }
         }
 
         public string GenerateUserName(string email)
@@ -306,6 +311,23 @@ namespace Interext.Controllers
             //}
         }
 
+        public ActionResult SetProfilePictureInLayout(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        public async Task<ActionResult> SetProfilePictureInLayout(ImageModel model, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+            ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            model.ImageUrl = user.ImageUrl;
+            }
+            return View(model);
+
+        }
+
         private async Task<ExternalLoginInfo> AuthenticationManager_GetExternalLoginInfoAsync_Workaround()
         {
             ExternalLoginInfo loginInfo = null;
@@ -417,6 +439,7 @@ namespace Interext.Controllers
             var firstName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:first_name").Value;
             var lastName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:last_name").Value;
             var gender = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:gender").Value;
+            var imageURL = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:image_small").Value;
             //var emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             userToReturn = new ApplicationUser()
             {
@@ -424,7 +447,8 @@ namespace Interext.Controllers
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
-                Gender = i_Model.Gender
+                Gender = i_Model.Gender,
+                ImageUrl = imageURL
             };
             return userToReturn;
         }

@@ -20,15 +20,15 @@ namespace Interext.OtherCalsses
 {
     public static class ImageSaver
     {
-        internal static void SaveImage(HttpPostedFileBase ImageUrl, string SavePath)
+        internal static void SaveImage(HttpPostedFileBase ImageUrl, string SavePath, string fileName)
         {
             if (ImageUrl != null)
             {
                 if (ImageUrl.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(ImageUrl.FileName);
+                    Directory.CreateDirectory(SavePath);
                     // need to create folder for each user, the name of the folder is the id of the user
-                    var path = SavePath + fileName;
+                    var path = Path.Combine(SavePath, fileName);
                     ImageUrl.SaveAs(path);
 
                 }

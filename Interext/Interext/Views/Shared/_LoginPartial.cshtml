@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@model Interext.Models.ImageModel
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -7,7 +8,12 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a href="~/Account/ShowProfile"><img src="/Content/images/example-images/profile-pic.jpg" />@*@User.Identity.GetUserName()*@</a>
+            @if (Model != null)
+            {
+                <a href="~/Account/ShowProfile">
+                    <img src="@Model.ImageUrl" />
+    @*<img src="@Url.Content(Model.ImageUrl)"/>*@@*@User.Identity.GetUserName()*@</a>
+            }
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
