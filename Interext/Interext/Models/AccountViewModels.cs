@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Interext.Migrations;
+using Interext.OtherCalsses;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Interext.Models
@@ -19,8 +22,8 @@ namespace Interext.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Display(Name = "Date of birth")]
-        public DateTime BirthDate { get; set; }
+        //[Display(Name = "Date of birth")]
+        //public DateTime BirthDate { get; set; }
 
         [Display(Name = "Gender")]
         public string Gender { get; set; }
@@ -90,12 +93,11 @@ namespace Interext.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [BirthdateValidation]
+        public DateTime BirthDate { get; set; }
 
         [Display(Name = "Image Url")]
         public string ImageUrl { get; set; }
-        
-        //[Display(Name = "Date of birth")]
-        //public DateTime BirthDate { get; set; }
 
         [Required]
         [Display(Name = "Gender")]
@@ -125,13 +127,14 @@ namespace Interext.Models
         [Display(Name = "Image Url")]
         public new string ImageUrl { get; set; }
 
-
         [Required]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
         [Display(Name = "Interests")]
         public virtual ICollection<Interest> Interests { get; set; }
+
+        public string BirthDate { get; set; }
 
         [Display(Name = "Events")]
         public virtual ICollection<Event> Events { get; set; }

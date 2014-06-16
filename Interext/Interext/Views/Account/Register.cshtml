@@ -23,13 +23,15 @@
         @Html.ValidationMessageFor(m => m.Password)
         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm password" })
         @Html.ValidationMessageFor(m => m.ConfirmPassword)
-        @*<script>
+
+        <script>
                             $(function () {
                                 $("#BirthDate").datepicker();
                             });
                         </script>
             <input type="text" id="BirthDate" name="BirthDate" class="form-control" placeholder="Birth date" />
-                        @Html.ValidationMessageFor(m => m.BirthDate)*@
+         @Html.ValidationMessageFor(m => m.BirthDate)
+            <p></p>
         @*@Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", @placeholder = "Birth date" })
             @Html.ValidationMessageFor(m => m.BirthDate)*@
 
@@ -38,13 +40,9 @@
         @Html.RadioButtonFor(m => m.Gender, "F")
         <span>Female</span>
         @*@Html.LabelFor(model => model.ImageUrl, new { @class = "form-control" })*@
-        <label for="ImageUrl" class="form-control">image:</label>
+        <label for="ImageUrl" class="form-control">Image:</label>
         <input type="file" name="ImageUrl" id="ImageUrl" />
-
-
-
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-
     }
 
     @section Scripts {

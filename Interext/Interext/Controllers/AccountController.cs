@@ -52,7 +52,23 @@ namespace Interext.Controllers
             profile.Interests = null;
             profile.Events = null;
             profile.ImageUrl = user.ImageUrl;
+            profile.BirthDate = getBirthdateAndAge(user.BirthDate);
             return View(profile);
+        }
+
+        private string getBirthdateAndAge(DateTime? i_BirthDate)
+        {
+            string finalResult = "";
+            int birthDateYear;
+            int todayYear = DateTime.Today.Year;
+            if(i_BirthDate.HasValue == true)
+            {
+                string birthDateString = i_BirthDate.Value.ToShortDateString();
+                birthDateYear = i_BirthDate.Value.Year;
+                 int age = todayYear - birthDateYear - 1;
+                 finalResult = string.Format("{0} ({1} year old)", birthDateString, age.ToString());
+            }
+            return finalResult;
         }
 
         //
@@ -121,8 +137,9 @@ namespace Interext.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Gender = model.Gender,
+                    BirthDate = model.BirthDate.Date
                 };
-                uploadAndSetImage(user, ImageUrl);
+                uploadAndSetImage(ref user, ImageUrl);
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -138,7 +155,9 @@ namespace Interext.Controllers
             return View(model);
         }
 
-        private void uploadAndSetImage(ApplicationUser user, HttpPostedFileBase ImageUrl)
+    
+
+        private void uploadAndSetImage(ref ApplicationUser user, HttpPostedFileBase ImageUrl)
         {
             if (ImageUrl != null)
             {
@@ -438,8 +457,10 @@ namespace Interext.Controllers
 
             var firstName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:first_name").Value;
             var lastName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:last_name").Value;
-            var gender = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:gender").Value;
-            var imageURL = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:image_small").Value;
+            string gender = getGender(externalIdentity);
+            var userID = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:id").Value;
+            var birthDate = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:birthdate").Value;
+            var imageURL = string.Format(@"https://graph.facebook.com/{0}/picture?type=normal", userID);
             //var emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             userToReturn = new ApplicationUser()
             {
@@ -447,12 +468,37 @@ namespace Interext.Controllers
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
-                Gender = i_Model.Gender,
+                Gender = gender,
                 ImageUrl = imageURL
             };
             return userToReturn;
         }
 
+        private string getGender(Task<ClaimsIdentity> externalIdentity)
+        {
+            string gender = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:gender").Value;
+            gender = gender.ToLower();
+            if (gender == "female")
+            {
+                return "F";
+            }
+            else if (gender == "male")
+            { return "M"; }
+            else
+            { return ""; }
+        }
+
+        public string GetGender()
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            ApplicationUser user = userManager.FindByNameAsync(User.Identity.Name).Result;
+            if (user.Gender == "M")
+            { return "Male"; }
+            else if (user.Gender == "F")
+            { return "Female"; }
+            else
+            { return ""; }
+        }
         private Task<ClaimsIdentity> getExternalIdentity()
         {
             return HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);

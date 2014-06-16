@@ -10,9 +10,7 @@
         <li>
             @if (Model != null)
             {
-                <a href="~/Account/ShowProfile">
-                    <img src="@Model.ImageUrl" />
-    @*<img src="@Url.Content(Model.ImageUrl)"/>*@@*@User.Identity.GetUserName()*@</a>
+                <a href="~/Account/ShowProfile"><img src="@Model.ImageUrl" /></a>
             }
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
