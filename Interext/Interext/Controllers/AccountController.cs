@@ -14,6 +14,7 @@ using Microsoft.Owin.Security.Facebook;
 using Microsoft.AspNet.Identity.Owin;
 using System.IO;
 using Interext.OtherCalsses;
+using TestApp.Models;
 
 namespace Interext.Controllers
 {
@@ -53,6 +54,7 @@ namespace Interext.Controllers
             profile.Events = null;
             profile.ImageUrl = user.ImageUrl;
             profile.BirthDate = getBirthdateAndAge(user.BirthDate);
+            profile.Address = user.HomeAddress;
             return View(profile);
         }
 
@@ -100,7 +102,6 @@ namespace Interext.Controllers
                     ModelState.AddModelError("", "Invalid email or password.");
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -137,7 +138,8 @@ namespace Interext.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Gender = model.Gender,
-                    BirthDate = model.BirthDate.Date
+                    BirthDate = model.BirthDate.Date,
+                    HomeAddress = model.Address
                 };
                 uploadAndSetImage(ref user, ImageUrl);
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -161,7 +163,6 @@ namespace Interext.Controllers
         {
             if (ImageUrl != null)
             {
-
                 string pathForToSave = Path.Combine(Server.MapPath("~/Content/images"), user.Id);
                 string fileName = Path.GetFileName(ImageUrl.FileName);
                 string pathForPicture = string.Format(@"/Content/images/{0}/{1}", user.Id, fileName);
@@ -573,7 +574,6 @@ namespace Interext.Controllers
                 }
             }
         }
-
         private bool HasPassword()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());

@@ -102,6 +102,9 @@ namespace Interext.Models
         [Required]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
+
+        [Display(Name = "Address")]
+        public string Address { get; set; }
     }
 
     public class ProfileViewModel : ImageModel
@@ -138,5 +141,6 @@ namespace Interext.Models
 
         [Display(Name = "Events")]
         public virtual ICollection<Event> Events { get; set; }
+        public string Address { get; set; }
     }
 }

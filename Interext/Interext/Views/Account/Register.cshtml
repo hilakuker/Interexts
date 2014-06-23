@@ -25,16 +25,18 @@
         @Html.ValidationMessageFor(m => m.ConfirmPassword)
 
         <script>
-                            $(function () {
-                                $("#BirthDate").datepicker();
-                            });
-                        </script>
-            <input type="text" id="BirthDate" name="BirthDate" class="form-control" placeholder="Birth date" />
-         @Html.ValidationMessageFor(m => m.BirthDate)
-            <p></p>
+            $(function () {
+                $("#BirthDate").datepicker();
+            });
+        </script>
+        <input type="text" id="BirthDate" name="BirthDate" class="form-control" placeholder="Birth date" />
+        @Html.ValidationMessageFor(m => m.BirthDate)
+        <p></p>
         @*@Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", @placeholder = "Birth date" })
             @Html.ValidationMessageFor(m => m.BirthDate)*@
-
+        <input id="searchTextField" type="text" size="50" placeholder="Where you live.." name="Address">
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+        <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
         @Html.RadioButtonFor(m => m.Gender, "M", new { @checked = "checked" })
         <span>Male</span>
         @Html.RadioButtonFor(m => m.Gender, "F")
@@ -43,10 +45,12 @@
         <label for="ImageUrl" class="form-control">Image:</label>
         <input type="file" name="ImageUrl" id="ImageUrl" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        @*@Html.TextBoxFor(m=>m.Address, new { @class = "form-control address", @placeholder = "Where your live..." })*@
+
     }
 
     @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/google")
     }
 
 </section>

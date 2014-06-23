@@ -183,6 +183,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Interest.cs" />
     <Compile Include="Models\KeepTouchDB.cs" />
+    <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\Place.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\ImageModel.cs" />
@@ -549,6 +550,7 @@
     <Content Include="Scripts\contrast\megafolio\js\megafolio-init-old.js" />
     <Content Include="Scripts\contrast\megafolio\js\megafolio-init-old2.js" />
     <Content Include="Scripts\contrast\megafolio\js\megafolio-init.js" />
+    <Content Include="Scripts\googlemaps.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.mobile-1.4.2.min.map" />

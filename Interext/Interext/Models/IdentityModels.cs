@@ -19,6 +19,8 @@ namespace Interext.Models
         public string ImageUrl { get; set; }
         public virtual ICollection<Interest> Interests { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+
+        public string HomeAddress { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
