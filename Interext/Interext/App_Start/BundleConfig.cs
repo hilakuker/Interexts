@@ -32,10 +32,18 @@ namespace Interext
                       "~/Scripts/contrast/megafolio/js/megafolio-init.js"
                       ));
 
+            //bundles.Add(new StyleBundle("~/Content/css").Include(
+            //           "~/Content/contrast/main.css",
+            //           "~/Content/contrast/font-awesome.css",
+            //           "~/Content/contrast/megafolio.css",
+            //            "~/Content/style.css"
+            //          ));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                       "~/Content/contrast/main.css",
+                       "~/Content/css/site/main.css",
+                        "~/Content/css/shared/flipping-text.css",
                        "~/Content/contrast/font-awesome.css",
-                       "~/Content/contrast/megafolio.css",
+                       "~/Content/css/site/events-wall.css",
                         "~/Content/style.css"
                       ));
             bundles.Add(new StyleBundle("~/Content/jquery-ui-style").Include(

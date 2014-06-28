@@ -1,14 +1,14 @@
-﻿.mega-smallcaptions {
+﻿.event-box-content {
     color:#fff;
 }
-.mega-smallcaptions .mega-date {
+.event-box-content .mega-date {
     font-size:50px;
     font-weight:200;
 }
-.mega-smallcaptions mega-location span {
+.event-box-content mega-location span {
     margin-right:10px;
 }
-    .mega-smallcaptions .mega-by-person img {
+    .event-box-content .mega-by-person img {
         vertical-align:middle;
     }
 

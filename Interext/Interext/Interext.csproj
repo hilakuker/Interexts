@@ -201,6 +201,11 @@
     <Content Include="Content\contrast\main.css" />
     <Content Include="Content\contrast\megafolio - old.css" />
     <Content Include="Content\contrast\megafolio.css" />
+    <Content Include="Content\css\shared\flipping-text.css" />
+    <Content Include="Content\css\shared\main.css" />
+    <Content Include="Content\css\site\events-wall.css" />
+    <Content Include="Content\css\site\eventspage.css" />
+    <Content Include="Content\css\site\main.css" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\font\mono\MonoSocialIconsFont-1.10.svg" />
     <Content Include="Content\images\ajax-loader.gif" />
@@ -606,6 +611,7 @@
   <ItemGroup>
     <Folder Include="App_Data\uploads\events\" />
     <Folder Include="App_Data\uploads\user_profiles\" />
+    <Folder Include="Content\css\intro\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
