@@ -213,3 +213,7 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+*.jpg
+Interext/Interext/App_Data/Interext_log.ldf
+Interext/Interext/App_Data/Interext.mdf
+Interext/Interext/App_Data/Interext_log.ldf
