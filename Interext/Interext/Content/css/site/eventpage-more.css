@@ -3,8 +3,8 @@
 */
 #main > .container {
     -webkit-box-shadow: none;
--moz-box-shadow: none;
-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 .event-page-content {
     padding-top:36px;
@@ -24,7 +24,7 @@ box-shadow: none;
     }
 #content .event-page-content h1.event-title {
 	
-	margin:0 0 22px 0 !important;	
+	margin:0 0 22px 0;	
 	position: relative;
     float:left;
     color:#fff;
@@ -96,9 +96,68 @@ box-shadow: none;
     float:right;
     width:48%;
 }
+.create-form .create-basic-info .full-control {
+    width:100%;
+    
+}
+#content .event-page-content.create-page .event-intro-wrapper .event-intro {
+    padding-bottom : 0px;
+    background-color:#333;
+}
+#content .event-page-content.create-page .event-intro-wrapper h1.event-title{
+    margin-bottom : 0px;
+}
+#content .event-page-content.create-page input[type="submit"] {
+    width:100%;
+    margin-top:43px;
+}
+.input-with-image-wrapper
+{
+    position: relative;
+}
+
+.insert-image-button {
+    display: inline-block;
+  width: 20px;
+  height: 20px;
+  position:absolute;
+  right: 11px;
+  top: 13px;
+
+color:#bfbfbf;
+font-size:20px;
+}
+.input-with-image-wrapper:hover .insert-image-button {
+    color:#68D999;
+}
+.fa.fa-calendar.insert-image-button {
+    right:11px;
+}
+.fa.fa-map-marker.insert-image-button {
+    right:7px;
+}
+.short-textbox {
+    width:60px;
+}
+.choose-bg-color-text {
+    margin:10px 0 0 10px;
+}
+.choose-bg-alpha-text {
+    margin-top:14px;
+}
+#slider {
+    margin:14px 0 0 8px;
+    width:140px;
+}
+#slider a {
+    left:80%;
+}
+
 #sidebar .join-event {
     width:100%;
 }
+
+
 
 .post-audio,
 .post-video {

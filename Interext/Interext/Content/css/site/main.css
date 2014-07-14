@@ -70,7 +70,7 @@ span.symbol, a.symbol:before {
     width: 508px; /* 5 columns */
     float: left;
     margin: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 #content.no-sidebar {
@@ -109,24 +109,25 @@ img::-moz-selection {
 }
 
 input,
-textarea {
+textarea, select {
     border-radius: 3px;
     border: none;
     padding: 12px 10px;
     outline: none;
     -webkit-transition: all .2s;
     transition: all .2s;
+    box-sizing: border-box;
 }
 
 input:not([type=submit]):not([type=file]),
-textarea {
+textarea, select {
     border: 1px solid #bfbfbf;
     margin: 2px 0;
     color: #bfbfbf;
 }
 
-input:not([type=submit]):not([type=file]):hover, textarea:hover,
-input:not([type=submit]):not([type=file]):focus, textarea:focus {
+input:not([type=submit]):not([type=file]):hover, textarea:hover, select:hover,
+input:not([type=submit]):not([type=file]):focus, textarea:focus, select:focus {
     border-color: #68D999;
 }
 
@@ -261,9 +262,6 @@ body {
 
 #sidebar .widget:first-child > h3 {
     border-top: 1px solid #dedede;
-    border-bottom: 1px solid #dedede;
-    padding: 2px 0 2px 0 !important;
-    margin-bottom: 28px;
 }
 
 #siebar ul,
@@ -585,7 +583,7 @@ input[type=submit] {
     margin: 0 0 12px 12px;
 }*/
 
-.none { 
+.none {
     display: none;
 }
 
@@ -1171,3 +1169,104 @@ dd {
     body {
     }
 }
+
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 12px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin:2px 0;
+}
+
+.btn-default, .btn-disabled {
+    color: #fff;
+    background-color: #bfbfbf;
+    border-color: #bfbfbf;
+}
+
+.btn-default:hover, .btn-special:hover {
+    color: #fff;
+    background-color: #333;
+border-color: #000;
+}
+
+.btn-default:hover span.fa, .btn-special:hover span.fa {
+    background-color: #68D999;
+}
+
+.btn-special {
+    color: #fff;
+    background-color: #68D999;
+    border-color: #68D999;
+}
+
+.btn-dark {
+    color: #fff;
+    background-color: #333;
+border-color: #000;
+}
+.btn-dark:hover {
+    color: #fff;
+    background-color: #68D999;
+    border-color: #68D999;
+}
+
+
+
+#event-search {
+	float: right;
+	position: absolute;
+	right: 61px;
+	top: 0;
+	z-index: 999;
+	-webkit-transition: background .2s;
+	transition: background .2s;
+
+}
+ #event-search-menu span {
+display: block;
+text-align: center;
+font-size: 18px;
+padding-left: 3px;
+}
+ #event-search a {
+	text-decoration: none !important;
+}
+ #single-page {
+            width: 100%;
+            margin: 0 auto;
+            margin-top:30px;
+            background-color:#fff;
+        }
+ @media only screen and (min-width: 1212px) {
+        #single-page {
+            padding: 0 36px;
+            width: 1140px;
+            
+        }
+    }
+#logoutForm {
+    position:absolute;
+    top:0;
+    right:60px;
+}
+#logoutForm li {
+    float:left;
+    list-style:none;
+}
+    #logoutForm img {
+        height:60px;
+        width:60px;
+    }

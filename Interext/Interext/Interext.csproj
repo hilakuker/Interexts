@@ -192,8 +192,8 @@
     <Content Include="Content\bootstrap-signin.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\contrast\eventpage-main.css" />
-    <Content Include="Content\contrast\eventpage.css" />
+    <Content Include="Content\css\site\eventpage-more.css" />
+    <Content Include="Content\css\site\eventpage-template.css" />
     <Content Include="Content\contrast\eventspage - old.css" />
     <Content Include="Content\contrast\eventspage.css" />
     <Content Include="Content\contrast\font-awesome.css" />
@@ -202,7 +202,9 @@
     <Content Include="Content\contrast\megafolio - old.css" />
     <Content Include="Content\contrast\megafolio.css" />
     <Content Include="Content\css\shared\flipping-text.css" />
+    <Content Include="Content\css\shared\font-awesome.css" />
     <Content Include="Content\css\shared\main.css" />
+    <Content Include="Content\css\site\colorpicker.css" />
     <Content Include="Content\css\site\events-wall.css" />
     <Content Include="Content\css\site\eventspage.css" />
     <Content Include="Content\css\site\main.css" />
@@ -210,6 +212,32 @@
     <Content Include="Content\font\mono\MonoSocialIconsFont-1.10.svg" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\ajax-loader.png" />
+    <Content Include="Content\images\colorpicker\blank.gif" />
+    <Content Include="Content\images\colorpicker\colorpicker_background.png" />
+    <Content Include="Content\images\colorpicker\colorpicker_hex.png" />
+    <Content Include="Content\images\colorpicker\colorpicker_hsb_b.png" />
+    <Content Include="Content\images\colorpicker\colorpicker_hsb_h.png" />
+    <Content Include="Content\images\colorpicker\colorpicker_hsb_s.png" />
+    <Content Include="Content\images\colorpicker\colorpicker_indic.gif" />
+    <Content Include="Content\images\colorpicker\colorpicker_overlay.png" />
+    <Content Include="Content\images\colorpicker\colorpicker_rgb_b.png" />
+    <Content Include="Content\images\colorpicker\colorpicker_rgb_g.png" />
+    <Content Include="Content\images\colorpicker\colorpicker_rgb_r.png" />
+    <Content Include="Content\images\colorpicker\colorpicker_select.gif" />
+    <Content Include="Content\images\colorpicker\colorpicker_submit.png" />
+    <Content Include="Content\images\colorpicker\custom_background.png" />
+    <Content Include="Content\images\colorpicker\custom_hex.png" />
+    <Content Include="Content\images\colorpicker\custom_hsb_b.png" />
+    <Content Include="Content\images\colorpicker\custom_hsb_h.png" />
+    <Content Include="Content\images\colorpicker\custom_hsb_s.png" />
+    <Content Include="Content\images\colorpicker\custom_indic.gif" />
+    <Content Include="Content\images\colorpicker\custom_rgb_b.png" />
+    <Content Include="Content\images\colorpicker\custom_rgb_g.png" />
+    <Content Include="Content\images\colorpicker\custom_rgb_r.png" />
+    <Content Include="Content\images\colorpicker\custom_submit.png" />
+    <Content Include="Content\images\colorpicker\select.png" />
+    <Content Include="Content\images\colorpicker\select2.png" />
+    <Content Include="Content\images\colorpicker\slider.png" />
     <Content Include="Content\images\example-images\292380.jpg" />
     <Content Include="Content\images\example-images\event1.jpg" />
     <Content Include="Content\images\example-images\event2.jpg" />
@@ -520,7 +548,12 @@
     <Content Include="Content\zocial\zocial-regular-webfont.eot" />
     <Content Include="Content\zocial\zocial-regular-webfont.ttf" />
     <Content Include="Content\zocial\zocial-regular-webfont.woff" />
+    <Content Include="Content\css\site\file-uploader-button.css" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\colorpicker\colorpicker.js" />
+    <Content Include="Scripts\colorpicker\eye.js" />
+    <Content Include="Scripts\colorpicker\layout.js" />
+    <Content Include="Scripts\colorpicker\utils.js" />
     <Content Include="Scripts\contrast\contrast-global-plugins.js" />
     <Content Include="Scripts\contrast\contrast.js" />
     <Content Include="Scripts\contrast\megafolio\fancybox\blank.gif" />
@@ -548,6 +581,7 @@
     <Content Include="Scripts\contrast\megafolio\js\megafolio-init-old.js" />
     <Content Include="Scripts\contrast\megafolio\js\megafolio-init-old2.js" />
     <Content Include="Scripts\contrast\megafolio\js\megafolio-init.js" />
+    <Content Include="Scripts\event-create.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.mobile-1.4.2.min.map" />
@@ -612,6 +646,7 @@
     <Folder Include="App_Data\uploads\events\" />
     <Folder Include="App_Data\uploads\user_profiles\" />
     <Folder Include="Content\css\intro\" />
+    <Folder Include="Content\css\jquery.ui\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
