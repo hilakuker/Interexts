@@ -1,8 +1,5 @@
-﻿using Interext.Migrations;
-using Interext.OtherCalsses;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Interext.Models
@@ -22,8 +19,8 @@ namespace Interext.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        //[Display(Name = "Date of birth")]
-        //public DateTime BirthDate { get; set; }
+        [Display(Name = "Date of birth")]
+        public DateTime BirthDate { get; set; }
 
         [Display(Name = "Gender")]
         public string Gender { get; set; }
@@ -93,21 +90,19 @@ namespace Interext.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [BirthdateValidation]
-        public DateTime BirthDate { get; set; }
 
         [Display(Name = "Image Url")]
         public string ImageUrl { get; set; }
+        
+        //[Display(Name = "Date of birth")]
+        //public DateTime BirthDate { get; set; }
 
         [Required]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
-
-        [Display(Name = "Address")]
-        public string Address { get; set; }
     }
 
-    public class ProfileViewModel : ImageModel
+    public class ProfileViewModel
     {
         //[Required]
         [Display(Name = "Username")]
@@ -128,7 +123,9 @@ namespace Interext.Models
 
   
         [Display(Name = "Image Url")]
-        public new string ImageUrl { get; set; }
+        public string ImageUrl { get; set; }
+        //[Display(Name = "Date of birth")]
+        //public DateTime BirthDate { get; set; }
 
         [Required]
         [Display(Name = "Gender")]
@@ -137,10 +134,7 @@ namespace Interext.Models
         [Display(Name = "Interests")]
         public virtual ICollection<Interest> Interests { get; set; }
 
-        public string BirthDate { get; set; }
-
         [Display(Name = "Events")]
         public virtual ICollection<Event> Events { get; set; }
-        public string Address { get; set; }
     }
 }

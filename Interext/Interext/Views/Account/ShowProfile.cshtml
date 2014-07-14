@@ -11,7 +11,7 @@
 
 <section class="profile">
     <div class="profile-content">
-        <img src="@Model.ImageUrl" />
+        <img src="@Html.DisplayFor(model => model.ImageUrl)" />
         <div class="profile-info">
             <h1 class="name">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h1>
             <table class="basic-info">
@@ -19,19 +19,19 @@
                     <td>
                         Birth date
                     </td>
-                    <td>@Model.BirthDate</td>
+                    <td>28/5/1989 (24 years old)</td>
                 </tr>
                 <tr>
                     <td>
                         Gender
                     </td>
-                    <td> @Html.Action("GetGender", "Account")</td>
+                    <td> Female</td>
                 </tr>
                 <tr>
                     <td>
                         <span class="fa fa-map-marker"></span>Location
                     </td>
-                    <td>@Model.Address</td>
+                    <td>Netanya, Israel</td>
                 </tr>
             </table>
         </div>

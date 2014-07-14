@@ -11,10 +11,6 @@ namespace Interext.Controllers
     {
         //InterextDB _db = new InterextDB();
         private ApplicationDbContext _db = new ApplicationDbContext();
-        public HomeController()
-        {
-                
-        }
         public ActionResult Index()
         {
             //return View();
