@@ -8,16 +8,6 @@ namespace Interext
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/google").Include(
-  "~/Scripts/jquery-{version}.js",
-  "~/Scripts/jquery-ui-{version}.js",
-  "~/Scripts/jquery-{version}.js",
-  "~/Scripts/jquery.unobtrusive*",
-  "~/Scripts/googlemaps.js",
-  "~/Scripts/bootstrap.js",
-  "~/Scripts/respond.js",
-  "~/Scripts/jquery.validate*")); 
-
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -41,13 +31,33 @@ namespace Interext
                       "~/Scripts/contrast/contrast.js",
                       "~/Scripts/contrast/megafolio/js/megafolio-init.js"
                       ));
+            bundles.Add(new ScriptBundle("~/bundles/eventPageJs").Include(
+                        "~/Scripts/event-create.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                       "~/Content/contrast/main.css",
-                       "~/Content/contrast/font-awesome.css",
-                       "~/Content/contrast/megafolio.css",
-                        "~/Content/style.css"
+            bundles.Add(new ScriptBundle("~/bundles/colorPickerJs").Include(
+                        "~/Scripts/colorpicker/colorpicker.js",
+                        "~/Scripts/colorpicker/layout.js"
+                        ));
+
+            //bundles.Add(new StyleBundle("~/Content/css").Include(
+            //           "~/Content/contrast/main.css",
+            //           "~/Content/contrast/font-awesome.css",
+            //           "~/Content/contrast/megafolio.css",
+            //            "~/Content/style.css"
+            //          ));
+
+            bundles.Add(new StyleBundle("~/Content/shared-css").Include(
+                "~/Content/css/shared/main.css",
+                        "~/Content/css/shared/flipping-text.css",
+                       "~/Content/css/shared/font-awesome.css"
                       ));
+
+            bundles.Add(new StyleBundle("~/Content/site-css").Include(
+                       "~/Content/css/site/main.css",
+                        "~/Content/css/site/events-wall.css",
+                         "~/Content/css/site/file-uploader-button.css"
+                      ));
+
             bundles.Add(new StyleBundle("~/Content/jquery-ui-style").Include(
                 "~/Content/themes/base/jquery-ui.css",
                 "~/Content/themes/base/jquery.ui.datepicker.css"
@@ -62,8 +72,8 @@ namespace Interext
                      ));
 
             bundles.Add(new StyleBundle("~/Content/eventPageCss").Include(
-                "~/Content/contrast/eventpage-main.css",
-                "~/Content/contrast/eventpage.css"
+                "~/Content/css/site/eventpage-template.css",
+                "~/Content/css/site/eventpage-more.css"
                      ));
 
             bundles.Add(new StyleBundle("~/Content/signinPageCss").Include(
@@ -72,8 +82,9 @@ namespace Interext
                 "~/Content/zocial/zocial.css"
                      ));
 
-            
-
+            bundles.Add(new StyleBundle("~/Content/colorPickerCss").Include(
+                            "~/Content/css/site/colorpicker.css"
+                                 ));
                 
         }
     }
