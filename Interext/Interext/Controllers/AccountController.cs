@@ -14,6 +14,7 @@ using Microsoft.Owin.Security.Facebook;
 using Microsoft.AspNet.Identity.Owin;
 using System.IO;
 using Interext.OtherCalsses;
+using TestApp.Models;
 
 namespace Interext.Controllers
 {
@@ -51,7 +52,25 @@ namespace Interext.Controllers
             //add age
             profile.Interests = null;
             profile.Events = null;
+            profile.ImageUrl = user.ImageUrl;
+            profile.BirthDate = getBirthdateAndAge(user.BirthDate);
+            profile.Address = user.HomeAddress;
             return View(profile);
+        }
+
+        private string getBirthdateAndAge(DateTime? i_BirthDate)
+        {
+            string finalResult = "";
+            int birthDateYear;
+            int todayYear = DateTime.Today.Year;
+            if(i_BirthDate.HasValue == true)
+            {
+                string birthDateString = i_BirthDate.Value.ToShortDateString();
+                birthDateYear = i_BirthDate.Value.Year;
+                 int age = todayYear - birthDateYear - 1;
+                 finalResult = string.Format("{0} ({1} year old)", birthDateString, age.ToString());
+            }
+            return finalResult;
         }
 
         //
@@ -72,7 +91,7 @@ namespace Interext.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(GenerateUserName(model.Email), model.Password);
+                ApplicationUser user = await UserManager.FindAsync(GenerateUserName(model.Email), model.Password);
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
@@ -83,7 +102,6 @@ namespace Interext.Controllers
                     ModelState.AddModelError("", "Invalid email or password.");
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -120,21 +138,14 @@ namespace Interext.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Gender = model.Gender,
-                    ImageUrl = model.Gender
+                    BirthDate = model.BirthDate.Date,
+                    HomeAddress = model.Address
                 };
-                //user.FirstName = model.FirstName;
-                //user.LastName = model.LastName;
-                //user.Gender = model.Gender;
-                            
-                //user.ImageUrl = model.ImageUrl;
-
-
+                uploadAndSetImage(ref user, ImageUrl);
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
-                    string pathToSavePicture = Path.Combine(Server.MapPath("~/App_Data/uploads/user_profiles"), user.Id);
-                    ImageSaver.SaveImage(ImageUrl, pathToSavePicture);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -142,9 +153,23 @@ namespace Interext.Controllers
                     AddErrors(result);
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+    
+
+        private void uploadAndSetImage(ref ApplicationUser user, HttpPostedFileBase ImageUrl)
+        {
+            if (ImageUrl != null)
+            {
+                string pathForToSave = Path.Combine(Server.MapPath("~/Content/images"), user.Id);
+                string fileName = Path.GetFileName(ImageUrl.FileName);
+                string pathForPicture = string.Format(@"/Content/images/{0}/{1}", user.Id, fileName);
+                user.ImageUrl = pathForPicture;
+                ImageSaver.SaveImage(ImageUrl, pathForToSave, fileName);
+                Server.MapPath(pathForPicture);
+            }
         }
 
         public string GenerateUserName(string email)
@@ -306,6 +331,23 @@ namespace Interext.Controllers
             //}
         }
 
+        public ActionResult SetProfilePictureInLayout(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        public async Task<ActionResult> SetProfilePictureInLayout(ImageModel model, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+            ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            model.ImageUrl = user.ImageUrl;
+            }
+            return View(model);
+
+        }
+
         private async Task<ExternalLoginInfo> AuthenticationManager_GetExternalLoginInfoAsync_Workaround()
         {
             ExternalLoginInfo loginInfo = null;
@@ -416,7 +458,10 @@ namespace Interext.Controllers
 
             var firstName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:first_name").Value;
             var lastName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:last_name").Value;
-            var gender = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:gender").Value;
+            string gender = getGender(externalIdentity);
+            var userID = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:id").Value;
+            var birthDate = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:birthdate").Value;
+            var imageURL = string.Format(@"https://graph.facebook.com/{0}/picture?type=normal", userID);
             //var emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             userToReturn = new ApplicationUser()
             {
@@ -424,11 +469,37 @@ namespace Interext.Controllers
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
-                Gender = i_Model.Gender
+                Gender = gender,
+                ImageUrl = imageURL
             };
             return userToReturn;
         }
 
+        private string getGender(Task<ClaimsIdentity> externalIdentity)
+        {
+            string gender = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:gender").Value;
+            gender = gender.ToLower();
+            if (gender == "female")
+            {
+                return "F";
+            }
+            else if (gender == "male")
+            { return "M"; }
+            else
+            { return ""; }
+        }
+
+        public string GetGender()
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            ApplicationUser user = userManager.FindByNameAsync(User.Identity.Name).Result;
+            if (user.Gender == "M")
+            { return "Male"; }
+            else if (user.Gender == "F")
+            { return "Female"; }
+            else
+            { return ""; }
+        }
         private Task<ClaimsIdentity> getExternalIdentity()
         {
             return HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
@@ -503,7 +574,6 @@ namespace Interext.Controllers
                 }
             }
         }
-
         private bool HasPassword()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
